@@ -13,7 +13,11 @@ concurrency:
 jobs:
   check-debug-otp-key:
     name: Validate DEV debug OTP key availability
+
     runs-on: ubuntu-latest
+
+    environment:
+      name: dev
 
     steps:
       - name: Configure AWS credentials
@@ -31,7 +35,7 @@ jobs:
           set -euo pipefail
 
           if [[ -z "${AWS_REGION_VALUE}" ]]; then
-            echo "::error::AWS_REGION repository variable is not configured."
+            echo "::error::AWS_REGION environment variable is not configured."
             exit 1
           fi
 
@@ -82,7 +86,8 @@ jobs:
           echo "=========================================="
           echo " DEV Debug OTP Gate"
           echo "=========================================="
-          echo "Parameter : available"
-          echo "Decrypt   : authorized"
-          echo "Value     : NOT exposed"
+          echo "Environment : dev"
+          echo "Parameter   : available"
+          echo "Decrypt     : authorized"
+          echo "Value       : NOT exposed"
           echo "=========================================="
